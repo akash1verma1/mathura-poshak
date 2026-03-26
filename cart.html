@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">Mathura Dress Bhandaar</div>
+  <div class="cart" onclick="goHome()">🏠 Home</div>
+</div>
+
+<div class="container" id="cartItems"></div>
+
+<h2 style="text-align:center">Total: ₹<span id="total">0</span></h2>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+async function loadCart() {
+  const res = await fetch(API_URL);
+  const products = await res.json();
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach(c => {
+    const p = products.find(x => x.id == c.id);
+    if (!p) return;
+
+    total += p.price * c.qty;
+
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <div class="title">${p.name}</div>
+        <div>₹${p.price}</div>
+
+        <div>
+          Qty: 
+          <button onclick="changeQty(${c.id}, -1)">-</button>
+          ${c.qty}
+          <button onclick="changeQty(${c.id}, 1)">+</button>
+        </div>
+
+        <button onclick="removeItem(${c.id})">Remove</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function changeQty(id, change) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let item = cart.find(i => i.id == id);
+
+  if (item) {
+    item.qty += change;
+    if (item.qty <= 0) {
+      cart = cart.filter(i => i.id != id);
+    }
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+}
+
+function removeItem(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart = cart.filter(i => i.id != id);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+}
+
+loadCart();
+</script>
+
+</body>
+</html>
