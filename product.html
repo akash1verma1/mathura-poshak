@@ -21,6 +21,15 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec"; // your API
 
+  function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let total = 0;
+  cart.forEach(item => total += item.qty);
+
+  document.getElementById("cartCount").innerText = total;
+}
+
   async function getProducts() {
   let cached = localStorage.getItem("products");
 
@@ -83,6 +92,7 @@ function changeImage(src) {
 }
 
 function addToCart(id) {
+  updateCartCount();
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   let item = cart.find(i => i.id == id);
@@ -104,6 +114,7 @@ setTimeout(() => {
 function goToCart() {
   window.location.href = "cart.html";
 }
+  updateCartCount();
 </script>
 
 </body>
