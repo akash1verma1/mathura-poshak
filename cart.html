@@ -41,7 +41,7 @@ function goHome() {
 }
 
 async function loadCart() {
- const data = await getProducts();
+ const products = await getProducts();
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
