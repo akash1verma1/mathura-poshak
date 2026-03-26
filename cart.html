@@ -60,12 +60,14 @@ async function loadCart() {
 // show loading
 container.innerHTML = "Loading cart...";
   let total = 0;
+  let itemCount = 0;
 let html = "";
  cart.forEach(c => {
   const p = products.find(x => x.id == c.id);
   if (!p) return;
 
   total += p.price * c.qty;
+   itemCount += c.qty;
 
   html += `
   <div class="cart-item">
