@@ -28,7 +28,9 @@ async function loadProducts() {
   const data = await res.json();
 
   document.getElementById("loader").style.display = "none";
-document.getElementById("products").style.display = "grid";
+  document.getElementById("products").style.display = "grid";
+
+  const container = document.getElementById("products"); // ✅ ADD THIS
   container.innerHTML = "";
 
   data.forEach(p => {
