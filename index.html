@@ -10,7 +10,9 @@
 <!-- HEADER -->
 <div class="header">
   <div class="logo">Mathura Dress Bhandaar</div>
-  <div class="cart" onclick="goToCart()">🛒 Cart</div>
+  <div class="cart" onclick="goToCart()">
+  🛒 Cart <span id="cartCount" class="cart-badge">0</span>
+</div>
 </div>
 
 <!-- PRODUCT GRID -->
@@ -51,6 +53,7 @@ async function loadProducts() {
       </div>
     `;
   });
+  updateCartCount();
 }
 
 // Navigate to product page
@@ -78,9 +81,19 @@ function addToCart(id) {
   localStorage.setItem("cart", JSON.stringify(cart));
 
   console.log("Added:", id, cart);
+  updateCartCount();
 }
 
 loadProducts();
+
+  function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+  let total = 0;
+  cart.forEach(item => total += item.qty);
+
+  document.getElementById("cartCount").innerText = total;
+}
 </script>
 
 </body>
