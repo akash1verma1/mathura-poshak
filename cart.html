@@ -36,31 +36,31 @@ async function loadCart() {
 // show loading
 container.innerHTML = "Loading cart...";
   let total = 0;
+let html = "";
+ cart.forEach(c => {
+  const p = products.find(x => x.id == c.id);
+  if (!p) return;
 
-  cart.forEach(c => {
-    const p = products.find(x => x.id == c.id);
-    if (!p) return;
+  total += p.price * c.qty;
 
-    total += p.price * c.qty;
+  html += `
+    <div class="card">
+      <img src="${p.image}">
+      <div class="title">${p.name}</div>
+      <div>₹${p.price}</div>
 
-    container.innerHTML += `
-      <div class="card">
-        <img src="${p.image}">
-        <div class="title">${p.name}</div>
-        <div>₹${p.price}</div>
-
-        <div>
-          Qty: 
-          <button onclick="changeQty(${c.id}, -1)">-</button>
-          ${c.qty}
-          <button onclick="changeQty(${c.id}, 1)">+</button>
-        </div>
-
-        <button onclick="removeItem(${c.id})">Remove</button>
+      <div>
+        Qty: 
+        <button onclick="changeQty(${c.id}, -1)">-</button>
+        ${c.qty}
+        <button onclick="changeQty(${c.id}, 1)">+</button>
       </div>
-    `;
-  });
 
+      <button onclick="removeItem(${c.id})">Remove</button>
+    </div>
+  `;
+});
+  container.innerHTML = html;
   document.getElementById("total").innerText = total;
   document.getElementById("totalBox").style.display = "block";
 }
