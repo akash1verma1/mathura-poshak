@@ -19,6 +19,24 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec"; // your API
 
+  async function getProducts() {
+  let cached = localStorage.getItem("products");
+
+  // ✅ If already stored, use it
+  if (cached) {
+    return JSON.parse(cached);
+  }
+
+  // ❌ If not, fetch from API
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+  // Save for next time
+  localStorage.setItem("products", JSON.stringify(data));
+
+  return data;
+}
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
