@@ -1,25 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+  <title>Mathura Dress Bhandaar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<header>Mathura Dress Bhandaar</header>
-<div id="products"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Mathura Dress Bhandaar</div>
+  <div class="cart" onclick="goToCart()">🛒 Cart</div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="container" id="products"></div>
 
 <script>
-const API='https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec';
-fetch(API).then(r=>r.json()).then(data=>{
-let html="";
-data.forEach(function(p){
-if(p.stock==0) return;
-html+='<div class="card" onclick="openProduct('+p.id+')">'+
-'<img src="'+p.image+'">'+
-'<h3>'+p.name+'</h3>'+
-'₹'+p.price+
-'</div>';
-});
-document.getElementById("products").innerHTML=html;
-});
-function openProduct(id){window.location="product.html?id="+id;}
+const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
+
+// Load products
+async function loadProducts() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  data.forEach(p => {
+    const stockText = p.stock > 0 ? "In Stock" : "Out of Stock";
+
+    container.innerHTML += `
+      <div class="card">
+
+        <img src="${p.image}" onclick="goToProduct(${p.id})">
+
+        <div class="title">${p.name}</div>
+
+        <div class="price">₹${p.price}</div>
+
+        <div style="color:${p.stock > 0 ? 'green' : 'red'}">
+          ${stockText}
+        </div>
+
+        <button onclick="addToCart(${p.id})" 
+          ${p.stock == 0 ? 'disabled' : ''}>
+          Add to Cart
+        </button>
+
+      </div>
+    `;
+  });
+}
+
+// Navigate to product page
+function goToProduct(id) {
+  window.location.href = "product.html?id=" + id;
+}
+
+// Go to cart
+function goToCart() {
+  window.location.href = "cart.html";
+}
+
+// Add to cart
+function addToCart(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({id: id, qty: 1});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to cart");
+}
+
+loadProducts();
 </script>
+
 </body>
 </html>
