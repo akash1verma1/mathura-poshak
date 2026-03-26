@@ -16,7 +16,8 @@
 </div>
 
 <!-- PRODUCT GRID -->
-<div class="container" id="products"></div>
+<div id="loader" class="loader">Loading products...</div>
+<div class="container" id="products" style="display:none;"></div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
@@ -26,7 +27,8 @@ async function loadProducts() {
   const res = await fetch(API_URL);
   const data = await res.json();
 
-  const container = document.getElementById("products");
+  document.getElementById("loader").style.display = "none";
+document.getElementById("products").style.display = "grid";
   container.innerHTML = "";
 
   data.forEach(p => {
