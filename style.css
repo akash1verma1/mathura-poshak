@@ -161,3 +161,9 @@ button:disabled {
   font-size: 12px;
   margin-left: 5px;
 }
+.loader {
+  text-align: center;
+  font-size: 18px;
+  padding: 30px;
+  font-weight: bold;
+}
