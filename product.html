@@ -80,7 +80,10 @@ function addToCart(id) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  alert("Added to Cart");
+  document.querySelector(".cart").innerText = "🛒 Added!";
+setTimeout(() => {
+  document.querySelector(".cart").innerText = "🛒 Cart";
+}, 1500);
 }
 
 function goToCart() {
