@@ -63,13 +63,23 @@ function goToCart() {
   window.location.href = "cart.html";
 }
 
-// Add to cart
+// Add to cart<script>
 function addToCart(id) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push({id: id, qty: 1});
+
+  let existing = cart.find(item => item.id == id);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: id, qty: 1 });
+  }
+
   localStorage.setItem("cart", JSON.stringify(cart));
-  console.log("Added to cart");
+
+  console.log("Added:", id, cart);
 }
+</script>
 
 loadProducts();
 </script>
