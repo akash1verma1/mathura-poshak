@@ -24,14 +24,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
   async function getProducts() {
   let cached = localStorage.getItem("products");
 
-  // ✅ If already stored, use it
   if (cached) {
     return JSON.parse(cached);
   }
 
-  // ❌ If not, fetch from API
-  const data = await getProducts();
-  // Save for next time
+  const res = await fetch(API_URL); // ✅ correct
+  const data = await res.json();
+
   localStorage.setItem("products", JSON.stringify(data));
 
   return data;
