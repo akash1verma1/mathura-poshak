@@ -31,9 +31,10 @@ async function loadCart() {
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const container = document.getElementById("cartItems").innerHTML = "Loading cart...";
-  container.innerHTML = "";
+  const container = document.getElementById("cartItems");
 
+// show loading
+container.innerHTML = "Loading cart...";
   let total = 0;
 
   cart.forEach(c => {
