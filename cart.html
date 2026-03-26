@@ -89,8 +89,9 @@ let html = "";
 `;
 });
   container.innerHTML = html;
+  document.getElementById("itemCount").innerText = itemCount;
   document.getElementById("total").innerText = total;
-  document.getElementById("totalBox").style.display = "block";
+  
 }
 
 function changeQty(id, change) {
