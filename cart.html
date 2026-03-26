@@ -68,13 +68,14 @@ let html = "";
   total += p.price * c.qty;
 
   html += `
-    <div class="card">
-      <img src="${p.image}">
+  <div class="cart-item">
+    <img src="${p.image}">
+
+    <div>
       <div class="title">${p.name}</div>
       <div>₹${p.price}</div>
 
-      <div>
-        Qty: 
+      <div class="qty-controls">
         <button onclick="changeQty(${c.id}, -1)">-</button>
         ${c.qty}
         <button onclick="changeQty(${c.id}, 1)">+</button>
@@ -82,7 +83,8 @@ let html = "";
 
       <button onclick="removeItem(${c.id})">Remove</button>
     </div>
-  `;
+  </div>
+`;
 });
   container.innerHTML = html;
   document.getElementById("total").innerText = total;
