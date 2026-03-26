@@ -1,3 +1,149 @@
-body{font-family:Arial;background:#f5f5f5}
-.card{background:#fff;padding:10px;margin:10px;cursor:pointer;border-radius:10px}
-header{background:#ff7a18;color:#fff;padding:15px;text-align:center}
+/* RESET */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(90deg, #ff7a18, #ff9a44);
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.cart {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* PRODUCT GRID */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 25px;
+}
+
+/* PRODUCT CARD */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  transition: 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* TITLE */
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* PRICE */
+.price {
+  font-size: 18px;
+  color: #111;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  background: #ff7a18;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #e56700;
+}
+
+button:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
+/* PRODUCT PAGE (for next step) */
+.product-page {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+}
+
+.product-img {
+  width: 400px;
+  border-radius: 12px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.product-price {
+  font-size: 22px;
+  margin: 10px 0;
+  color: #111;
+}
+
+/* CART PAGE */
+.cart-container {
+  padding: 30px;
+}
+
+.cart-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qty-btn {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.total-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
