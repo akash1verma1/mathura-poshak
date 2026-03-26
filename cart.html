@@ -12,11 +12,21 @@
   <div class="cart" onclick="goHome()">🏠 Home</div>
 </div>
 
-<div class="container" id="cartItems"></div>
+<div class="cart-wrapper">
 
-<h2 id="totalBox" style="text-align:center; display:none;">
-  Total: ₹<span id="total">0</span>
-</h2>
+  <!-- LEFT: ITEMS -->
+  <div id="cartItems" class="cart-left"></div>
+
+  <!-- RIGHT: PRICE -->
+  <div class="cart-right">
+    <h3>Price Details</h3>
+    <p>Total Items: <span id="itemCount">0</span></p>
+    <p>Total Price: ₹<span id="total">0</span></p>
+
+    <button class="place-order">Place Order</button>
+  </div>
+
+</div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
