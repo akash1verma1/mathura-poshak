@@ -14,7 +14,9 @@
 
 <div class="container" id="cartItems"></div>
 
-<h2 style="text-align:center">Total: ₹<span id="total">0</span></h2>
+<h2 id="totalBox" style="text-align:center; display:none;">
+  Total: ₹<span id="total">0</span>
+</h2>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
@@ -29,7 +31,7 @@ async function loadCart() {
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const container = document.getElementById("cartItems");
+  const container = document.getElementById("cartItems").innerHTML = "Loading cart...";
   container.innerHTML = "";
 
   let total = 0;
@@ -59,6 +61,7 @@ async function loadCart() {
   });
 
   document.getElementById("total").innerText = total;
+  document.getElementById("totalBox").style.display = "block";
 }
 
 function changeQty(id, change) {
