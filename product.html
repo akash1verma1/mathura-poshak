@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="style.css"></head>
+<body>
+<div id="product"></div>
+<script>
+const API='https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec';
+const id=new URLSearchParams(window.location.search).get("id");
+
+fetch(API).then(r=>r.json()).then(data=>{
+let p=data.find(function(x){return x.id==id});
+document.getElementById("product").innerHTML=
+'<img src="'+p.image+'" width="300">'+
+'<h2>'+p.name+'</h2>'+
+'₹'+p.price+
+'<br><button onclick="add()">Add to Cart</button>';
+window.prod=p;
+});
+
+function add(){
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+cart.push(prod);
+localStorage.setItem("cart",JSON.stringify(cart));
+alert("Added to cart");
+}
+</script>
+</body>
+</html>
