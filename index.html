@@ -39,39 +39,47 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
 
 // Load products
 async function loadProducts() {
-  const data = await getProducts();
+  try {
+    const data = await getProducts();
 
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("products").style.display = "grid";
+    const container = document.getElementById("products");
 
-  const container = document.getElementById("products"); // ✅ ADD THIS
-  container.innerHTML = "";
+    // safety check
+    if (!data || data.length === 0) {
+      document.getElementById("loader").innerText = "No products found";
+      return;
+    }
 
-  data.forEach(p => {
-    const stockText = p.stock > 0 ? "In Stock" : "Out of Stock";
+    document.getElementById("loader").style.display = "none";
+    container.style.display = "grid";
 
-    container.innerHTML += `
-      <div class="card">
+    container.innerHTML = "";
 
-        <img src="${p.image}" onclick="goToProduct(${p.id})">
+    data.forEach(p => {
+      const stockText = p.stock > 0 ? "In Stock" : "Out of Stock";
 
-        <div class="title">${p.name}</div>
-
-        <div class="price">₹${p.price}</div>
-
-        <div style="color:${p.stock > 0 ? 'green' : 'red'}">
-          ${stockText}
+      container.innerHTML += `
+        <div class="card">
+          <img src="${p.image}" onclick="goToProduct(${p.id})">
+          <div class="title">${p.name}</div>
+          <div class="price">₹${p.price}</div>
+          <div style="color:${p.stock > 0 ? 'green' : 'red'}">
+            ${stockText}
+          </div>
+          <button onclick="addToCart(${p.id})"
+            ${p.stock == 0 ? 'disabled' : ''}>
+            Add to Cart
+          </button>
         </div>
+      `;
+    });
 
-        <button onclick="addToCart(${p.id})" 
-          ${p.stock == 0 ? 'disabled' : ''}>
-          Add to Cart
-        </button>
+    updateCartCount();
 
-      </div>
-    `;
-  });
-  updateCartCount();
+  } catch (error) {
+    console.error(error);
+    document.getElementById("loader").innerText = "Failed to load products";
+  }
 }
 
 // Navigate to product page
