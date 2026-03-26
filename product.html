@@ -37,9 +37,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
+getProducts().then(data => {
     const p = data.find(item => item.id == id);
 
     let images = [];
