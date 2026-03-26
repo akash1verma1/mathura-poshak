@@ -1,28 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+  <title>Product</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<div id="product"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Mathura Dress Bhandaar</div>
+  <div class="cart" onclick="goToCart()">🛒 Cart</div>
+</div>
+
+<!-- PRODUCT SECTION -->
+<div class="product-page" id="product"></div>
+
 <script>
-const API='https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec';
-const id=new URLSearchParams(window.location.search).get("id");
+const API_URL = "https://script.google.com/macros/s/AKfycbwwzRkZMCmAm2cTWvHExJo9hm4b3k/exec"; // your API
 
-fetch(API).then(r=>r.json()).then(data=>{
-let p=data.find(function(x){return x.id==id});
-document.getElementById("product").innerHTML=
-'<img src="'+p.image+'" width="300">'+
-'<h2>'+p.name+'</h2>'+
-'₹'+p.price+
-'<br><button onclick="add()">Add to Cart</button>';
-window.prod=p;
-});
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-function add(){
-let cart=JSON.parse(localStorage.getItem("cart")||"[]");
-cart.push(prod);
-localStorage.setItem("cart",JSON.stringify(cart));
-alert("Added to cart");
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => {
+    const p = data.find(item => item.id == id);
+
+    let images = [];
+    if (p.images) {
+      images = p.images.split(",");
+    } else {
+      images = [p.image];
+    }
+
+    document.getElementById("product").innerHTML = `
+      <div>
+        <img src="${images[0]}" class="product-img" id="mainImg">
+        
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          ${images.map(img => `
+            <img src="${img}" 
+              style="width:60px; height:60px; cursor:pointer; border-radius:6px;"
+              onclick="changeImage('${img}')">
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="product-title">${p.name}</div>
+        <div class="product-price">₹${p.price}</div>
+
+        <p>Size: ${p.size || "Standard"}</p>
+        <p>Stock: ${p.stock}</p>
+
+        ${
+          p.stock > 0
+          ? `<button onclick="addToCart(${p.id})">Add to Cart</button>`
+          : `<button disabled>Out of Stock</button>`
+        }
+      </div>
+    `;
+  });
+
+function changeImage(src) {
+  document.getElementById("mainImg").src = src;
+}
+
+function addToCart(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let item = cart.find(i => i.id == id);
+
+  if (item) {
+    item.qty += 1;
+  } else {
+    cart.push({ id: id, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Added to Cart");
+}
+
+function goToCart() {
+  window.location.href = "cart.html";
 }
 </script>
+
 </body>
 </html>
