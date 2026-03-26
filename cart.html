@@ -30,9 +30,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
   }
 
   // ❌ If not, fetch from API
-  const res = await fetch(API_URL);
-  const data = await res.json();
-
+  const data = await getProducts();
   // Save for next time
   localStorage.setItem("products", JSON.stringify(data));
 
@@ -44,8 +42,7 @@ function goHome() {
 }
 
 async function loadCart() {
-  const res = await fetch(API_URL);
-  const products = await res.json();
+ const data = await getProducts();
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
