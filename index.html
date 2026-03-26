@@ -31,8 +31,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
   }
 
   // ❌ If not, fetch from API
-  const res = await fetch(API_URL);
-  const data = await res.json();
+  const data = await getProducts();
 
   // Save for next time
   localStorage.setItem("products", JSON.stringify(data));
@@ -42,8 +41,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
 
 // Load products
 async function loadProducts() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
+  const data = await getProducts();
 
   document.getElementById("loader").style.display = "none";
   document.getElementById("products").style.display = "grid";
