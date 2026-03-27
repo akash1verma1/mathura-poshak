@@ -170,6 +170,18 @@ function removeItem(id) {
 
 loadCart();
 </script>
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <h3>Enter Details</h3>
 
+    <input type="text" id="custName" placeholder="Name">
+    <input type="text" id="custPhone" placeholder="Phone">
+    <input type="email" id="custEmail" placeholder="Email (optional)">
+    <textarea id="custAddress" placeholder="Address"></textarea>
+
+    <button onclick="submitOrder()">Submit Order</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+</div>
 </body>
 </html>
