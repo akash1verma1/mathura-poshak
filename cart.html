@@ -23,13 +23,58 @@
     <p>Total Items: <span id="itemCount">0</span></p>
     <p>Total Price: ₹<span id="total">0</span></p>
 
-    <button class="place-order">Place Order</button>
+    <button class="place-order" onclick="placeOrder()">Place Order</button>
   </div>
 
 </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
+
+  async function placeOrder() {
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  const products = await getProducts();
+
+  let total = 0;
+  let productList = [];
+
+  cart.forEach(c => {
+    const p = products.find(x => x.id == c.id);
+    if (!p) return;
+
+    total += p.price * c.qty;
+
+    productList.push(`${p.name} x ${c.qty}`);
+  });
+
+  const orderData = {
+    name: "Test User",
+    phone: "9999999999",
+    email: "test@mail.com",
+    address: "Test Address",
+    products: productList.join(", "),
+    total: total,
+    remarks: ""
+  };
+
+  // 🔥 SEND TO GOOGLE SHEET
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(orderData)
+  });
+
+  alert("Order Placed!");
+
+  localStorage.removeItem("cart");
+  window.location.href = "index.html";
+}
 
   async function getProducts() {
   let cached = localStorage.getItem("products");
