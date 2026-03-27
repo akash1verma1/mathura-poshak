@@ -63,16 +63,17 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
     total: total,
     remarks: ""
   };
-    console.log(orderData);   // ✅ ADD THIS LINE
+   console.log(orderData);
 
-  // 🔥 SEND TO GOOGLE SHEET
-  const res = await fetch(API_URL, {
+const formData = new URLSearchParams();
+formData.append("data", JSON.stringify(orderData));
+
+await fetch(API_URL, {
   method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(orderData)
+  body: formData
 });
+
+alert("Order Placed!");
 
 const result = await res.json();
 console.log(result);
