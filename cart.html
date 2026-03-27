@@ -47,9 +47,14 @@ function closeModal() {
   let address = document.getElementById("custAddress").value;
 
   if (!name || !phone || !address) {
-    alert("Please fill required fields");
-    return;
-  }
+  alert("Please fill required fields");
+  return;
+}
+
+if (phone.length !== 10 || isNaN(phone)) {
+  alert("Enter valid 10-digit phone number");
+  return;
+}
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   const products = await getProducts();
@@ -80,6 +85,7 @@ function closeModal() {
   await fetch(url);
 
   alert("Order Placed!");
+   closeModal();
 
   localStorage.removeItem("cart");
   window.location.href = "index.html";
