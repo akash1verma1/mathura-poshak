@@ -23,7 +23,7 @@
     <p>Total Items: <span id="itemCount">0</span></p>
     <p>Total Price: ₹<span id="total">0</span></p>
 
-    <button class="place-order" onclick="placeOrder()">Place Order</button>
+    <button class="place-order" onclick="openModal()">Place Order</button>
   </div>
 
 </div>
@@ -31,15 +31,27 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo9hm4b3kKo7RToM4uiCBCdTGfwLJtBs-F8V9Rh4NK9wOW/exec";
 
-  async function placeOrder() {
+  function openModal() {
+  document.getElementById("orderModal").style.display = "block";
+}
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function closeModal() {
+  document.getElementById("orderModal").style.display = "none";
+}
+  
+ async function submitOrder() {
 
-  if (cart.length === 0) {
-    alert("Cart is empty");
+  let name = document.getElementById("custName").value;
+  let phone = document.getElementById("custPhone").value;
+  let email = document.getElementById("custEmail").value;
+  let address = document.getElementById("custAddress").value;
+
+  if (!name || !phone || !address) {
+    alert("Please fill required fields");
     return;
   }
 
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
   const products = await getProducts();
 
   let total = 0;
@@ -50,32 +62,24 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
     if (!p) return;
 
     total += p.price * c.qty;
-
     productList.push(`${p.name} x ${c.qty}`);
   });
 
   const orderData = {
-    name: "Test User",
-    phone: "9999999999",
-    email: "test@mail.com",
-    address: "Test Address",
+    name,
+    phone,
+    email,
+    address,
     products: productList.join(", "),
-    total: total,
+    total,
     remarks: ""
   };
-   console.log(orderData);
 
-const formData = new URLSearchParams();
-formData.append("data", JSON.stringify(orderData));
+  const url = API_URL + "?action=order&data=" + encodeURIComponent(JSON.stringify(orderData));
 
-const url = API_URL + "?action=order&data=" + encodeURIComponent(JSON.stringify(orderData));
+  await fetch(url);
 
-await fetch(url);
-
-alert("Order Placed!");
-
-
-
+  alert("Order Placed!");
 
   localStorage.removeItem("cart");
   window.location.href = "index.html";
