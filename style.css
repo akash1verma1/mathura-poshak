@@ -239,3 +239,6 @@ button:disabled {
 .modal input, .modal textarea {
   padding: 8px;
 }
+.modal-content button:last-child {
+  background: grey;
+}
