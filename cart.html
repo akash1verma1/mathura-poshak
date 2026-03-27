@@ -68,10 +68,9 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwwzRrKZMCmAm2cTWvHExJo
 const formData = new URLSearchParams();
 formData.append("data", JSON.stringify(orderData));
 
-await fetch(API_URL, {
-  method: "POST",
-  body: formData
-});
+const url = API_URL + "?action=order&data=" + encodeURIComponent(JSON.stringify(orderData));
+
+await fetch(url);
 
 alert("Order Placed!");
 
