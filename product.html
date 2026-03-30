@@ -92,7 +92,6 @@ function changeImage(src) {
 }
 
 function addToCart(id) {
-  updateCartCount();
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   let item = cart.find(i => i.id == id);
@@ -103,12 +102,15 @@ function addToCart(id) {
     cart.push({ id: id, qty: 1 });
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart)); // ✅ save first
+
+  updateCartCount(); // ✅ THEN update UI
 
   document.querySelector(".cart").innerText = "🛒 Added!";
-setTimeout(() => {
-  document.querySelector(".cart").innerText = "🛒 Cart";
-}, 1500);
+  setTimeout(() => {
+    document.querySelector(".cart").innerHTML = '🛒 Cart <span id="cartCount" class="cart-badge"></span>';
+    updateCartCount();
+  }, 1500);
 }
 
 function goToCart() {
