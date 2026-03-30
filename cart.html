@@ -48,8 +48,9 @@ const modal = document.querySelector(".modal-content");
 if (btn.disabled) return;
 
 btn.disabled = true;
-btn.innerText = "loading...";
-   btn.innerHTML = `<span class="spinner"></span> Placing...`;
+modal.classList.add("loading");   // ✅ ADD THIS
+
+btn.innerHTML = `<span class="spinner"></span> Placing...`;
    
   let name = document.getElementById("custName").value;
   let phone = document.getElementById("custPhone").value;
