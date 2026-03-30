@@ -91,7 +91,7 @@ modal.classList.remove("loading");   // ✅ ADD THIS
   return;
 }
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
   const products = await getProducts();
 
   let total = 0;
