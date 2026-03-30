@@ -109,18 +109,7 @@ if (phone.length !== 10 || isNaN(phone)) {
   btn.innerText = "Submit Order";
 }
 
-  alert("Order Placed!");
-   btn.innerText = "Placed ✅";
-   closeModal();
-
-   // ✅ CLEAR FORM (ADD HERE)
-document.getElementById("custName").value = "";
-document.getElementById("custPhone").value = "";
-document.getElementById("custEmail").value = "";
-document.getElementById("custAddress").value = "";
-
-  localStorage.removeItem("cart");
-  window.location.href = "index.html";
+ 
    
 }
 
