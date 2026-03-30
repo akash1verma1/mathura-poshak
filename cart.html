@@ -127,6 +127,7 @@ modal.classList.remove("loading");   // ✅ ADD THIS
 }
   function showSuccessScreen(orderData) {
   const modal = document.querySelector(".modal-content");
+    modal.classList.remove("loading");
 
   const orderId = Date.now();
 
