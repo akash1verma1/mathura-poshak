@@ -99,7 +99,7 @@ if (phone.length !== 10 || isNaN(phone)) {
   try {
   await fetch(url);
 
-  alert("Order Placed!");
+ showSuccessScreen(orderData);
 
   btn.innerText = "Placed ✅";
 
@@ -117,6 +117,22 @@ if (phone.length !== 10 || isNaN(phone)) {
 
  
    
+}
+  function showSuccessScreen(orderData) {
+  const modal = document.querySelector(".modal-content");
+
+  const orderId = Date.now();
+
+  modal.innerHTML = `
+    <h2 style="color:green;">✅ Order Placed Successfully</h2>
+    <p><strong>Order ID:</strong> ${orderId}</p>
+    <p>Thank you, ${orderData.name}!</p>
+    <p>We will contact you soon.</p>
+
+    <button onclick="goHome()">Continue Shopping</button>
+  `;
+
+  localStorage.removeItem("cart");
 }
 
   async function getProducts() {
