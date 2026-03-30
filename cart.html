@@ -42,12 +42,14 @@ function closeModal() {
  async function submitOrder() {
 
 const btn = document.getElementById("submitBtn");
+const modal = document.querySelector(".modal-content");
 
 // 🚫 prevent multiple clicks
 if (btn.disabled) return;
 
 btn.disabled = true;
-btn.innerText = "Placing...";
+btn.innerText = "loading...";
+   btn.innerHTML = `<span class="spinner"></span> Placing...`;
    
   let name = document.getElementById("custName").value;
   let phone = document.getElementById("custPhone").value;
