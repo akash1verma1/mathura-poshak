@@ -61,7 +61,8 @@ btn.innerHTML = `<span class="spinner"></span> Placing...`;
   alert("Please fill required fields");
 
   btn.disabled = false;
-  btn.innerText = "Submit Order";
+btn.innerText = "Submit Order";
+modal.classList.remove("loading");   // ✅ ADD THIS
 
   return;
 }
@@ -69,8 +70,9 @@ btn.innerHTML = `<span class="spinner"></span> Placing...`;
 if (phone.length !== 10 || isNaN(phone)) {
   alert("Enter valid 10-digit phone number");
 
-  btn.disabled = false;
-  btn.innerText = "Submit Order";
+ btn.disabled = false;
+btn.innerText = "Submit Order";
+modal.classList.remove("loading");   // ✅ ADD THIS
 
   return;
 }
@@ -108,7 +110,7 @@ if (phone.length !== 10 || isNaN(phone)) {
 
   btn.innerText = "Placed ✅";
 
-  closeModal();
+  
 
   localStorage.removeItem("cart");
 
@@ -117,7 +119,8 @@ if (phone.length !== 10 || isNaN(phone)) {
   alert("Error placing order. Try again.");
 
   btn.disabled = false;
-  btn.innerText = "Submit Order";
+btn.innerText = "Submit Order";
+modal.classList.remove("loading");   // ✅ ADD THIS
 }
 
  
