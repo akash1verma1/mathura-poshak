@@ -173,7 +173,7 @@ modal.classList.remove("loading");   // ✅ ADD THIS
 }
 
 function goHome() {
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 }
 
 async function loadCart() {
@@ -217,7 +217,16 @@ let html = "";
   container.innerHTML = html;
   document.getElementById("itemCount").innerText = itemCount;
   document.getElementById("total").innerText = total;
-  
+
+  const btn = document.querySelector(".place-order");
+
+if (itemCount === 0) {
+  btn.disabled = true;
+  btn.style.opacity = "0.5";
+} else {
+  btn.disabled = false;
+  btn.style.opacity = "1";
+}
 }
 
 function changeQty(id, change) {
