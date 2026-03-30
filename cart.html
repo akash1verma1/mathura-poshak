@@ -41,6 +41,13 @@ function closeModal() {
   
  async function submitOrder() {
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+if (cart.length === 0) {
+  alert("Your cart is empty!");
+  return;
+}
+   
 const btn = document.getElementById("submitBtn");
 const modal = document.querySelector(".modal-content");
 
