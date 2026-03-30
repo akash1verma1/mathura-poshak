@@ -54,8 +54,12 @@ btn.innerText = "Placing...";
   let email = document.getElementById("custEmail").value;
   let address = document.getElementById("custAddress").value;
 
-  if (!name || !phone || !address) {
+ if (!name || !phone || !address) {
   alert("Please fill required fields");
+
+  btn.disabled = false;
+  btn.innerText = "Submit Order";
+
   return;
 }
 
