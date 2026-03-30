@@ -41,6 +41,14 @@ function closeModal() {
   
  async function submitOrder() {
 
+const btn = document.getElementById("submitBtn");
+
+// 🚫 prevent multiple clicks
+if (btn.disabled) return;
+
+btn.disabled = true;
+btn.innerText = "Placing...";
+   
   let name = document.getElementById("custName").value;
   let phone = document.getElementById("custPhone").value;
   let email = document.getElementById("custEmail").value;
@@ -82,9 +90,27 @@ if (phone.length !== 10 || isNaN(phone)) {
 
   const url = API_URL + "?action=order&data=" + encodeURIComponent(JSON.stringify(orderData));
 
+  try {
   await fetch(url);
 
   alert("Order Placed!");
+
+  btn.innerText = "Placed ✅";
+
+  closeModal();
+
+  localStorage.removeItem("cart");
+  window.location.href = "index.html";
+
+} catch (err) {
+  alert("Error placing order. Try again.");
+
+  btn.disabled = false;
+  btn.innerText = "Submit Order";
+}
+
+  alert("Order Placed!");
+   btn.innerText = "Placed ✅";
    closeModal();
 
    // ✅ CLEAR FORM (ADD HERE)
@@ -95,6 +121,7 @@ document.getElementById("custAddress").value = "";
 
   localStorage.removeItem("cart");
   window.location.href = "index.html";
+   
 }
 
   async function getProducts() {
@@ -195,7 +222,7 @@ loadCart();
     <input type="email" id="custEmail" placeholder="Email (optional)">
     <textarea id="custAddress" placeholder="Address"></textarea>
 
-    <button onclick="submitOrder()">Submit Order</button>
+    <button id="submitBtn" onclick="submitOrder()">Submit Order</button>
     <button onclick="closeModal()">Cancel</button>
   </div>
 </div>
