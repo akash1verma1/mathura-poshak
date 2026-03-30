@@ -68,6 +68,10 @@ btn.innerHTML = `<span class="spinner"></span> Placing...`;
 
 if (phone.length !== 10 || isNaN(phone)) {
   alert("Enter valid 10-digit phone number");
+
+  btn.disabled = false;
+  btn.innerText = "Submit Order";
+
   return;
 }
 
